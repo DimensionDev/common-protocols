@@ -4,6 +4,6 @@ This repository includes certain protocols developed by @DimensionDev and we wan
 
 ## List of Protocols
 
-| Index | Title                                                             |
-| ----- | ----------------------------------------------------------------- |
-| 0     | [Blockchain Storage File Over Web (BSFOW) 1.0](/specs/0-BSFOW.md) |
+| Index | Path                             | Title                                                             |
+| ----- | -------------------------------- | ----------------------------------------------------------------- |
+| 0     | [src/attachment](src/attachment) | [Blockchain Storage File Over Web (BSFOW) 1.0](/specs/0-BSFOW.md) |

@@ -2,21 +2,15 @@ import { decode as decodePack } from "@msgpack/msgpack";
 import { StorageInput, StoragePayload, MAGIC_HEADER } from "./types";
 import { bufferEqual } from "../utils";
 import { importKey, checksum } from "./utils";
+import { verify } from "./verify";
 
 export async function decode(
   jwk: JsonWebKey | false,
   encoded: Uint8Array,
 ): Promise<StorageInput> {
-  if (!bufferEqual(MAGIC_HEADER, encoded.slice(0, MAGIC_HEADER.length))) {
-    throw new Error("not expected magic header.");
-  }
+  verify(encoded);
   const buffer = encoded.slice(MAGIC_HEADER.length);
   const payload = decodePack(buffer) as StoragePayload;
-  if (payload.version !== 0) {
-    throw new Error("not supported file version.");
-  } else if (!bufferEqual(payload.blockHash, checksum(payload.block))) {
-    throw new Error("block checksum failed.");
-  }
   let block = payload.block;
   if (jwk !== false && payload.algorithm !== undefined) {
     const key = await importKey(jwk);
