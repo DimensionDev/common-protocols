@@ -1,0 +1,5 @@
+!/dist-cjs
+!/dist-esm
+/test
+/scripts
+/.vscode

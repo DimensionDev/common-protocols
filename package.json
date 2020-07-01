@@ -1,0 +1,28 @@
+{
+  "name": "@dimensiondev/common-protocols",
+  "version": "1.0.0",
+  "description": "Dimension development, internal exchange protocol stack",
+  "license": "AGPL-3.0-or-later",
+  "author": "DimensionDev",
+  "main": "./dist-cjs/index.js",
+  "module": "./dist-esm/index.js",
+  "scripts": {
+    "build": "rimraf dist && tsc && tsc -p tsconfig.cjs.json",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "@msgpack/msgpack": "^1.12.2",
+    "sha3": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.0.14",
+    "chai": "^4.2.0",
+    "mocha": "^8.0.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5",
+    "webcrypto": "https://github.com/DimensionDev/webcrypto"
+  }
+}
