@@ -24,5 +24,8 @@
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
     "webcrypto": "https://github.com/DimensionDev/webcrypto"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
