@@ -8,6 +8,7 @@
   "module": "./dist-esm/index.js",
   "scripts": {
     "build": "rimraf dist && tsc && tsc -p tsconfig.cjs.json",
+    "prepublishOnly": "npm run build",
     "test": "mocha"
   },
   "dependencies": {
