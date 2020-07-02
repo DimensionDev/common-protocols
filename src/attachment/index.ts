@@ -1,4 +1,5 @@
-export type { StorageInput } from "./types";
+export type { StorageInput, StoragePayload } from "./types";
 export { encode } from "./encoder";
 export { decode } from "./decoder";
-export { verify } from "./verify";
+export { getPayload } from "./payload";
+export { loadKey } from "./utils";

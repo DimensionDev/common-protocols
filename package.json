@@ -11,8 +11,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@msgpack/msgpack": "^1.12.2",
-    "sha3": "^2.1.2"
+    "@msgpack/msgpack": "^1.12.2"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

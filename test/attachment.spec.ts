@@ -2,10 +2,8 @@ import "mocha";
 import { assert } from "chai";
 import { promises as fs } from "fs";
 
-import * as Attachment from "../src/attachment";
+import { encode, decode, StorageInput, loadKey } from "../src/attachment";
 import { fixture } from "./utils";
-import { StorageInput } from "../src/attachment/types";
-import { loadKey } from "../src/attachment/utils";
 
 describe("attachement exchange format", () => {
   const encrypted = fixture("encoded-with-encryption.blob");
@@ -21,14 +19,14 @@ describe("attachement exchange format", () => {
   it("with encryption", async () => {
     const jwk = await loadKey(new TextEncoder().encode("sample"));
     const expected = await fs.readFile(encrypted);
-    await Attachment.encode(jwk, input);
-    assert.deepStrictEqual(await Attachment.decode(jwk, expected), input);
+    assert.deepStrictEqual(await decode(jwk, expected), input);
   });
 
   it("without encryption", async () => {
     const jwk = false;
     const expected = await fs.readFile(unencrypted);
-    assert.isTrue(expected.equals(await Attachment.encode(jwk, input)));
-    assert.deepStrictEqual(await Attachment.decode(jwk, expected), input);
+    const encoded = await encode(jwk, input);
+    assert.isTrue(expected.equals(encoded));
+    assert.deepStrictEqual(await decode(jwk, expected), input);
   });
 });

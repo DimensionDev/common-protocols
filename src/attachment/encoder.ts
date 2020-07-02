@@ -25,7 +25,7 @@ export async function encode(
     algorithm,
 
     block,
-    blockHash: checksum(block),
+    blockHash: await checksum(block),
   };
   return Uint8Array.from([...MAGIC_HEADER, ...encodePack(payload)]);
 }

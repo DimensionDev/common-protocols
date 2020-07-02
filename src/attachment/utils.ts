@@ -1,5 +1,3 @@
-import { SHA3Hash } from "sha3";
-
 export function importKey(jwk: JsonWebKey) {
   return crypto.subtle.importKey(
     "jwk",
@@ -10,8 +8,9 @@ export function importKey(jwk: JsonWebKey) {
   );
 }
 
-export function checksum(block: Uint8Array) {
-  return new SHA3Hash(224).update(Buffer.from(block)).digest();
+export async function checksum(block: Uint8Array) {
+  const hashed = await crypto.subtle.digest({ name: "SHA-256" }, block);
+  return new Uint8Array(hashed);
 }
 
 export async function loadKey(
