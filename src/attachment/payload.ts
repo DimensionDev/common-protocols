@@ -3,7 +3,10 @@ import { MAGIC_HEADER, StoragePayload } from "./types";
 import { bufferEqual } from "../utils";
 import { checksum } from "./utils";
 
-export async function getPayload(encoded: Uint8Array) {
+export async function getPayload(
+  passphrase: Uint8Array | undefined,
+  encoded: Uint8Array,
+) {
   if (!bufferEqual(MAGIC_HEADER, encoded.slice(0, MAGIC_HEADER.length))) {
     throw new Error("unexpected magic header.");
   }
@@ -17,6 +20,10 @@ export async function getPayload(encoded: Uint8Array) {
     throw new Error("unexpected `metadata.fileName`.");
   } else if (!bufferEqual(payload.blockHash, await checksum(payload.block))) {
     throw new Error("unexpected `blockHash`.");
+  } else if (passphrase && payload.keyHash) {
+    if (!bufferEqual(payload.keyHash, await checksum(passphrase))) {
+      throw new Error("unexpected `keyHash`.");
+    }
   }
   return payload;
 }

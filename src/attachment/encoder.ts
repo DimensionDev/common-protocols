@@ -1,17 +1,18 @@
 import { encode as encodePack } from "@msgpack/msgpack";
 
-import { checksum, importKey } from "./utils";
+import { checksum, loadKey } from "./utils";
 import { MAGIC_HEADER, StoragePayload, StorageInput } from "./types";
 
 export async function encode(
-  jwk: JsonWebKey | false,
+  passphrase: Uint8Array | undefined,
   input: StorageInput,
 ): Promise<Uint8Array> {
-  let algorithm, block;
-  if (jwk === false) {
+  let algorithm, block, keyHash;
+  if (passphrase === undefined) {
     block = input.block;
   } else {
-    const key = await importKey(jwk);
+    keyHash = await checksum(passphrase);
+    const key = await loadKey(passphrase);
     const iv = crypto.getRandomValues(new Uint8Array(12));
     algorithm = { name: "AES-GCM", iv, tagLength: 128 };
     const encrypted = await crypto.subtle.encrypt(algorithm, key, input.block);
@@ -23,6 +24,7 @@ export async function encode(
     mime: input.mime,
     metadata: input.metadata,
     algorithm,
+    keyHash,
 
     block,
     blockHash: await checksum(block),

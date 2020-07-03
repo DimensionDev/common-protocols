@@ -1,27 +1,12 @@
-export function importKey(jwk: JsonWebKey) {
-  return crypto.subtle.importKey(
-    "jwk",
-    jwk,
-    { name: "AES-GCM", length: 128 },
-    false,
-    ["encrypt", "decrypt"],
-  );
-}
-
 export async function checksum(block: Uint8Array) {
   const hashed = await crypto.subtle.digest({ name: "SHA-256" }, block);
   return new Uint8Array(hashed);
 }
 
-export async function loadKey(
-  password: Uint8Array | null,
-): Promise<JsonWebKey | false> {
-  if (password === null) {
-    return false;
-  }
+export async function loadKey(passphrase: Uint8Array): Promise<CryptoKey> {
   const key = await crypto.subtle.importKey(
     "raw",
-    password,
+    passphrase,
     { name: "PBKDF2" },
     false,
     ["deriveBits", "deriveKey"],
@@ -38,5 +23,5 @@ export async function loadKey(
     true,
     ["encrypt", "decrypt"],
   );
-  return crypto.subtle.exportKey("jwk", webKey);
+  return webKey;
 }

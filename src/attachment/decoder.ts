@@ -1,21 +1,21 @@
 import { getPayload } from "./payload";
 import { StorageInput } from "./types";
-import { importKey } from "./utils";
+import { loadKey } from "./utils";
 
 export async function decode(
-  jwk: JsonWebKey | false,
+  passphrase: Uint8Array | undefined,
   encoded: Uint8Array,
 ): Promise<StorageInput> {
-  const payload = await getPayload(encoded);
+  const payload = await getPayload(passphrase, encoded);
   let block = payload.block;
-  if (jwk !== false && payload.algorithm !== undefined) {
-    const key = await importKey(jwk);
-    const decrypted = await crypto.subtle.decrypt(
-      payload.algorithm,
-      key,
-      payload.block,
+  if (passphrase && payload.algorithm) {
+    block = new Uint8Array(
+      await crypto.subtle.decrypt(
+        payload.algorithm,
+        await loadKey(passphrase),
+        payload.block,
+      ),
     );
-    block = new Uint8Array(decrypted);
   }
   return {
     mime: payload.mime,
