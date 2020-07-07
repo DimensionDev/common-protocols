@@ -11,7 +11,7 @@ export async function loadKey(passphrase: Uint8Array): Promise<CryptoKey> {
     false,
     ["deriveBits", "deriveKey"],
   );
-  const webKey = await crypto.subtle.deriveKey(
+  return crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
       salt: Uint8Array.of(108, 133, 124, 142, 43, 136, 76, 202),
@@ -23,5 +23,4 @@ export async function loadKey(passphrase: Uint8Array): Promise<CryptoKey> {
     true,
     ["encrypt", "decrypt"],
   );
-  return webKey;
 }
