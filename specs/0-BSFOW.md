@@ -14,16 +14,19 @@ MASKBOOK-ATTACHMENT
 >
 > 2. Use this field order
 
-| Order | Field Name | Description            |
-| ----- | ---------- | ---------------------- |
-| 0     | version    | `0` fixed value        |
-| 1     | mime       | `.block` mime type     |
-| 2     | metadata   | metadata dictionary    |
-| 3     | salt       | for PBKDF2 salt        |
-| 4     | keyHash    | for encrypted key hash |
-| 5     | algorithm  | `AES-GCM` params       |
-| 6     | block      | Uint8Array block       |
-| 7     | blockHash  | SHA2 (256) on `.block` |
+| Order | Field Name | Description                 |
+| ----- | ---------- | --------------------------- |
+| 0     | version    | `0` fixed value             |
+| 1     | mime       | `.block` mime type          |
+| 2     | metadata   | \* metadata dictionary      |
+| 5     | algorithm  | \*\* `AES-GCM` params       |
+| 3     | salt       | \*\* for PBKDF2 salt        |
+| 4     | keyHash    | \*\* for encrypted key hash |
+| 6     | block      | Uint8Array block            |
+| 7     | blockHash  | SHA2 (256) on `.block`      |
+
+- \* nullable
+- \*\* in encryption required
 
 ## Sample
 
