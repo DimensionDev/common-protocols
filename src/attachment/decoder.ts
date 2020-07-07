@@ -9,13 +9,12 @@ export async function decode(
   const payload = await getPayload(passphrase, encoded);
   let block = payload.block;
   if (passphrase && payload.algorithm && payload.salt) {
-    block = new Uint8Array(
-      await crypto.subtle.decrypt(
-        payload.algorithm,
-        await loadKey(passphrase, payload.salt),
-        payload.block,
-      ),
+    const data = await crypto.subtle.decrypt(
+      payload.algorithm,
+      await loadKey(passphrase, payload.salt),
+      payload.block,
     );
+    block = new Uint8Array(data);
   }
   return {
     mime: payload.mime,
