@@ -12,7 +12,7 @@ export async function encode(
     block = input.block;
   } else {
     keyHash = await checksum(passphrase);
-    salt = crypto.getRandomValues(new Uint8Array(12));
+    salt = crypto.getRandomValues(new Uint8Array(8));
     const key = await loadKey(passphrase, salt);
     const iv = crypto.getRandomValues(new Uint8Array(12));
     algorithm = { name: "AES-GCM", iv, tagLength: 128 };
