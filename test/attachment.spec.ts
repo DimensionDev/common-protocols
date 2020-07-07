@@ -12,14 +12,19 @@ describe("attachement exchange format", () => {
   const input: StorageInput = {
     mime: "text/plain",
     block: new TextEncoder().encode("sample"),
-    metadata: {
-      fileName: "sample.txt",
-    },
+    metadata: null,
   };
 
   it("with encryption", async () => {
     const expected = await fs.readFile(encrypted);
-    assert.deepStrictEqual(await decode(passphrase, expected), input);
+    const actual = await decode(passphrase, expected);
+    assert.deepStrictEqual(actual, input);
+  });
+
+  it("with encryption (self cycle)", async () => {
+    const encoded = await encode(passphrase, input);
+    const decoded = await decode(passphrase, encoded);
+    assert.deepStrictEqual(decoded, input);
   });
 
   it("without encryption", async () => {

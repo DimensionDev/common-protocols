@@ -16,8 +16,6 @@ export async function getPayload(
     throw new Error("unexpected file version.");
   } else if (payload.mime.length === 0) {
     throw new Error("unexpected `.mime`.");
-  } else if (typeof payload.metadata?.fileName !== "string") {
-    throw new Error("unexpected `metadata.fileName`.");
   } else if (!bufferEqual(payload.blockHash, await checksum(payload.block))) {
     throw new Error("unexpected `blockHash`.");
   } else if (passphrase && payload.keyHash) {
