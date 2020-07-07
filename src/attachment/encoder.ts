@@ -7,12 +7,13 @@ export async function encode(
   passphrase: Uint8Array | undefined,
   input: StorageInput,
 ): Promise<Uint8Array> {
-  let algorithm, block, keyHash;
+  let algorithm, salt, block, keyHash;
   if (passphrase === undefined) {
     block = input.block;
   } else {
     keyHash = await checksum(passphrase);
-    const key = await loadKey(passphrase);
+    salt = crypto.getRandomValues(new Uint8Array(12));
+    const key = await loadKey(passphrase, salt);
     const iv = crypto.getRandomValues(new Uint8Array(12));
     algorithm = { name: "AES-GCM", iv, tagLength: 128 };
     const encrypted = await crypto.subtle.encrypt(algorithm, key, input.block);
@@ -24,6 +25,7 @@ export async function encode(
     mime: input.mime,
     metadata: input.metadata,
     algorithm,
+    salt,
     keyHash,
 
     block,

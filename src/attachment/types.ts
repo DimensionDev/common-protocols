@@ -12,6 +12,7 @@ export interface StoragePayload {
   mime: string;
   metadata: Record<string, any> | undefined;
   algorithm: AesGcmParams | undefined;
+  salt: Uint8Array | undefined;
   keyHash: Uint8Array | undefined;
 
   block: Uint8Array;

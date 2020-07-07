@@ -3,7 +3,10 @@ export async function checksum(block: Uint8Array) {
   return new Uint8Array(hashed);
 }
 
-export async function loadKey(passphrase: Uint8Array): Promise<CryptoKey> {
+export async function loadKey(
+  passphrase: Uint8Array,
+  salt: Uint8Array,
+): Promise<CryptoKey> {
   const key = await crypto.subtle.importKey(
     "raw",
     passphrase,
@@ -14,7 +17,7 @@ export async function loadKey(passphrase: Uint8Array): Promise<CryptoKey> {
   return crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
-      salt: Uint8Array.of(108, 133, 124, 142, 43, 136, 76, 202),
+      salt,
       iterations: 1000,
       hash: "SHA-256",
     },

@@ -8,11 +8,11 @@ export async function decode(
 ): Promise<StorageInput> {
   const payload = await getPayload(passphrase, encoded);
   let block = payload.block;
-  if (passphrase && payload.algorithm) {
+  if (passphrase && payload.algorithm && payload.salt) {
     block = new Uint8Array(
       await crypto.subtle.decrypt(
         payload.algorithm,
-        await loadKey(passphrase),
+        await loadKey(passphrase, payload.salt),
         payload.block,
       ),
     );
