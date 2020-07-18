@@ -1,1 +1,1 @@
-globalThis.crypto = require("webcrypto").crypto;
+globalThis.crypto = require("@dimensiondev/webcrypto").crypto;
