@@ -5,10 +5,10 @@
   "repository": "https://github.com/DimensionDev/common-protocols",
   "license": "AGPL-3.0-or-later",
   "author": "DimensionDev",
-  "main": "./dist-cjs/index.js",
-  "module": "./dist-esm/index.js",
+  "main": "./cjs/index.js",
+  "module": "./esm/index.js",
   "scripts": {
-    "build": "rimraf dist && tsc && tsc -p tsconfig.esm.json",
+    "build": "rimraf cjs esm && tsc && tsc -p tsconfig.esm.json",
     "prepublishOnly": "npm run build",
     "test": "mocha"
   },

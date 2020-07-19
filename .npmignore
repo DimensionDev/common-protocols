@@ -1,6 +1,6 @@
-!/dist-cjs
-!/dist-esm
-/test
-/scripts
-/.vscode
+!/cjs
+!/esm
 /.github
+/.vscode
+/scripts
+/test
