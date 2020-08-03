@@ -1,6 +1,6 @@
 # CommonProtocols
 
-This repository includes certain protocols developed by @DimensionDev and we want to make them availble for the public under [GNU FDL v1.3](https://www.gnu.org/licenses/fdl-1.3.html).
+This repository includes certain protocols developed by @DimensionDev and we want to make them available for the public under [GNU FDL v1.3](https://www.gnu.org/licenses/fdl-1.3.html).
 
 ## List of Protocols
 
